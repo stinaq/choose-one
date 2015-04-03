@@ -11,7 +11,7 @@ angular.module('chooseOneApp')
   .controller('MainCtrl', function ($scope) {
 
     var main = this;
-
+    main.roundIsStarted = false;
     var nextLevelFilms = [];
 
     main.films = [
