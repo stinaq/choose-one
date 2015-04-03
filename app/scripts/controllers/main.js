@@ -26,6 +26,9 @@ angular.module('chooseOneApp')
       },
       {
         name: 'Lion King'
+      },
+      {
+        name: 'Snow white'
       }
     ];
 
@@ -35,18 +38,24 @@ angular.module('chooseOneApp')
       // när films är tom eller längd 1 så sätts films = nextLevelFilms och nextLevelFilms sätts till
       // tom lista
       // Om films efter omsättningen är längd 1 så har en film vunnit!
-      console.log(main.films);
-      main.currentFilmOne = main.films.shift();
-      main.currentFilmTwo = main.films.shift();
+      console.log('setFilms after it all', angular.toJson(main.films));
+      
     };
 
     main.clickedOne = function (pickedFilm) {
-      console.log(pickedFilm);
       nextLevelFilms.push(pickedFilm);
-      setFilms();
-      console.log(nextLevelFilms);
+      setFilms(pickedFilm);
     };
 
-    setFilms();
+    main.startNewRound = function () {
+      console.log(angular.toJson(main.films));
+      main.currentFilmOne = main.films.shift();
+      console.log(angular.toJson(main.films));
+      main.currentFilmTwo = main.films.shift();
+      console.log(angular.toJson(main.films));
+      main.roundIsStarted = true;
+    };
+
+    
 
   });
