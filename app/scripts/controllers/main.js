@@ -32,7 +32,26 @@ angular.module('chooseOneApp')
       }
     ];
 
-    var setFilms = function () {
+    var setFilms = function (pickedFilm) {
+      // nextLevelFilms.push(pickedFilm);
+
+      if (main.films.length > 1) {
+        console.log('More than one film, pushed ' + pickedFilm.name);
+        main.currentFilmOne = main.films.shift();
+        main.currentFilmTwo = main.films.shift();
+      } else {
+        if (main.films.length === 1) {
+          console.log('only one film left, popping ' + main.films[0].name);
+          nextLevelFilms.push(main.films.pop());
+        }
+
+        if (main.films.length === 0) {
+          main.films = nextLevelFilms;
+          console.log('SetFilms length 0', 'new round!');
+          main.roundIsStarted = false;
+        }
+      }
+
       // Om längden på listan är 1 så ska den automatiskt flyttas upp till nästa lista
       // den promotas alltså, får ett litet övertag, men det är ok
       // när films är tom eller längd 1 så sätts films = nextLevelFilms och nextLevelFilms sätts till
