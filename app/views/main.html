@@ -3,8 +3,14 @@
   <h1> Choose One</h1>
 
   <div>
-    <h3 ng-click="main.clickedOne(main.currentFilmOne)">{{ main.currentFilmOne.name }}</h3>
-    <h3 ng-click="main.clickedOne(main.currentFilmTwo)">{{ main.currentFilmTwo.name }}</h3>
+    <h3 ng-click="main.clickedOne(main.currentFilmOne)"
+        ng-show="main.roundIsStarted">
+          {{ main.currentFilmOne.name }}
+    </h3>
+    <h3 ng-click="main.clickedOne(main.currentFilmTwo)"
+        ng-show="main.roundIsStarted">
+          {{ main.currentFilmTwo.name }}
+    </h3>
     <h3 ng-click="main.startNewRound()"
         ng-hide="main.roundIsStarted">
           Start new round!
