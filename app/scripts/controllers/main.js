@@ -8,33 +8,16 @@
  * Controller of the chooseOneApp
  */
 angular.module('chooseOneApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, lodash, animatedFilms) {
 
     var main = this;
     main.roundIsStarted = false;
+    main.isFinalRound = false;
     var nextLevelFilms = [];
 
-    main.films = [
-      {
-        name: 'Frozen'
-      },
-      {
-        name: 'Wall-e'
-      },
-      {
-        name: 'Brave'
-      },
-      {
-        name: 'Lion King'
-      },
-      {
-        name: 'Snow white'
-      }
-    ];
+    main.films = animatedFilms.films;
 
     var setFilms = function (pickedFilm) {
-      // nextLevelFilms.push(pickedFilm);
-
       if (main.films.length > 1) {
         console.log('More than one film, pushed ' + pickedFilm.name);
         main.currentFilmOne = main.films.shift();
@@ -47,34 +30,38 @@ angular.module('chooseOneApp')
 
         if (main.films.length === 0) {
           main.films = nextLevelFilms;
+          console.log('Before shuffle', main.films);
+          main.films = lodash.shuffle(main.films);
+          console.log('after shuffle', main.films);
+          nextLevelFilms = [];
+
+          if (main.films.length === 2) {
+            console.log('Final round!');
+            main.isFinalRound = true;
+          }
           console.log('SetFilms length 0', 'new round!');
           main.roundIsStarted = false;
         }
       }
 
-      // Om längden på listan är 1 så ska den automatiskt flyttas upp till nästa lista
-      // den promotas alltså, får ett litet övertag, men det är ok
-      // när films är tom eller längd 1 så sätts films = nextLevelFilms och nextLevelFilms sätts till
-      // tom lista
-      // Om films efter omsättningen är längd 1 så har en film vunnit!
       console.log('setFilms after it all', angular.toJson(main.films));
       
     };
 
     main.clickedOne = function (pickedFilm) {
-      nextLevelFilms.push(pickedFilm);
-      setFilms(pickedFilm);
+      if (main.isFinalRound) {
+        console.log('Winner is picked!', pickedFilm.name);
+        main.winner = pickedFilm;
+      } else{
+        nextLevelFilms.push(pickedFilm);
+        setFilms(pickedFilm);
+        console.log('Picked film', angular.toJson(nextLevelFilms));
+      }
     };
 
     main.startNewRound = function () {
-      console.log(angular.toJson(main.films));
       main.currentFilmOne = main.films.shift();
-      console.log(angular.toJson(main.films));
       main.currentFilmTwo = main.films.shift();
-      console.log(angular.toJson(main.films));
       main.roundIsStarted = true;
     };
-
-    
-
   });

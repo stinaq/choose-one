@@ -4,16 +4,26 @@
 
   <div>
     <h3 ng-click="main.clickedOne(main.currentFilmOne)"
-        ng-show="main.roundIsStarted">
+        ng-show="main.roundIsStarted"
+        ng-hide="main.winner">
           {{ main.currentFilmOne.name }}
     </h3>
     <h3 ng-click="main.clickedOne(main.currentFilmTwo)"
-        ng-show="main.roundIsStarted">
+        ng-show="main.roundIsStarted"
+        ng-hide="main.winner">
           {{ main.currentFilmTwo.name }}
     </h3>
     <h3 ng-click="main.startNewRound()"
         ng-hide="main.roundIsStarted">
           Start new round!
+    </h3>
+    <h3 ng-show="main.isFinalRound"
+        >
+          This is the final round!
+    </h3>
+    <h3 ng-show="main.winner">
+          And the winner is: <br>
+          {{ main.winner.name }}
     </h3>
   </div>
 
